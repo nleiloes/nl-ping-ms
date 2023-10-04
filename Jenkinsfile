@@ -1,7 +1,3 @@
-@Library('jenkins-libs')_
-
-def STAGE = "Start"
-
 pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
