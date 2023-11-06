@@ -29,11 +29,16 @@ pipeline {
                 script {
                     def customImageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
                     def dockerImage = docker.build(customImageTag, '.')
-                    withCredentials([usernamePassword(credentialsId: DOCKER_REGISTRY_CREDENTIALS, usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
-                        docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
-                            dockerImage.push()
+//                     withCredentials([usernamePassword(credentialsId: DOCKER_REGISTRY_CREDENTIALS, usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
+//                         docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
+//                             dockerImage.push()
+//                         }
+//                     }
+                        withCredentials([usernamePassword(credentialsId: 'lcrbneves', passwordVariable: '2Sq9he3c!', usernameVariable: 'lcrbneves')]) {
+                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
+                                dockerImage.push()
+                            }
                         }
-                    }
                 }
             }
         }
