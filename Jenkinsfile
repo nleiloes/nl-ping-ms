@@ -29,11 +29,15 @@ pipeline {
                 script {
                     def customImageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
                     def dockerImage = docker.build(customImageTag, '.')
-                    withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
-                        docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
-                            dockerImage.push()
+//                     withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
+//                         docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
+//                             dockerImage.push()
+//                         }
+//                     }
+                        withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
+                            sh "docker login -u lcrbneves -p 2Sq9he3c!"
+                          sh 'docker push shanem/spring-petclinic:latest'
                         }
-                    }
                 }
             }
         }
