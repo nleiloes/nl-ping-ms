@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'ndata-test-ms'
         DOCKER_REGISTRY = 'docker.io'
-        DOCKER_REGISTRY_CREDENTIALS = 'docker-hub-credentials'
+        DOCKER_REGISTRY_CREDENTIALS = 'lcrbneves'
         KUBE_NAMESPACE = 'your-kubernetes-namespace'
         KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
     }
