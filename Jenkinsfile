@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     def customImageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                    docker image build -t lcrbneves/ndata-test-ms:latest .
+                        sh "docker image build -t lcrbneves/ndata-test-ms:latest ."
                         withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
                             sh "docker login -u lcrbneves -p 2Sq9he3c!"
                           sh 'docker push docker.io/ndata-test-ms:latest'
