@@ -7,8 +7,6 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1'
         KUBE_NAMESPACE = 'your-kubernetes-namespace'
         KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
-        DOCKER_USER = 'lcrbneves'
-        DOCKER_PASSWORD = '2Sq9he3c!'
     }
 
     stages {
@@ -29,7 +27,7 @@ pipeline {
                 script {
                     def customImageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
                     def dockerImage = docker.build(customImageTag, '.')
-                    withCredentials([usernamePassword(credentialsId: DOCKER_REGISTRY_CREDENTIALS, usernameVariable: 'pq', passwordVariable: 'P0w3rB3st')]) {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_REGISTRY_CREDENTIALS, usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
                         docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
                             dockerImage.push()
                         }
