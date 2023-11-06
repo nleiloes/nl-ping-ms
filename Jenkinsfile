@@ -34,7 +34,7 @@ pipeline {
 //                             dockerImage.push()
 //                         }
 //                     }
-                        withCredentials([usernamePassword(credentialsId: 'lcrbneves', passwordVariable: '2Sq9he3c!', usernameVariable: 'lcrbneves')]) {
+                        withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', passwordVariable: '2Sq9he3c!', usernameVariable: 'lcrbneves')]) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_USER, DOCKER_PASSWORD) {
                                 dockerImage.push()
                             }
