@@ -7,6 +7,8 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1'
         KUBE_NAMESPACE = 'your-kubernetes-namespace'
         KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
+        DOCKER_USER = 'lcrbneves'
+        DOCKER_PASSWORD = '2Sq9he3c!'
     }
 
     stages {
