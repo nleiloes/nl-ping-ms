@@ -7,8 +7,6 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1'
         KUBE_NAMESPACE = 'your-kubernetes-namespace'
         KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
-        DOCKER_USER = 'lcrbneves'
-        DOCKER_PASSWORD = '2Sq9he3c!'
     }
 
     stages {
@@ -41,7 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh "kubectl config use-context k8app"
+//                     sh "kubectl config use-context k8app"
                     sh "kubectl set image deployment/${KUBE_DEPLOYMENT} your-container-name=${DOCKER_IMAGE}:${BUILD_NUMBER} -n ${KUBE_NAMESPACE}"
                 }
             }
