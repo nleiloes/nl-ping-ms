@@ -32,7 +32,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
                             sh "docker login -u lcrbneves -p 2Sq9he3c!"
                             sh "docker image build -t ndata-test-ms ."
-                          sh 'docker push docker.io/ndata-test-ms:latest'
+                          sh 'docker push ndata-test-ms:latest'
                         }
                 }
             }
