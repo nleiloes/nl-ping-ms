@@ -6,7 +6,7 @@ pipeline {
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_REGISTRY_CREDENTIALS = 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1'
         KUBE_NAMESPACE = 'default'
-        KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
+        KUBE_DEPLOYMENT = 'ndata-test-ms'
     }
 
     stages {
