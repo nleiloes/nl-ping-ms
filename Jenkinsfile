@@ -39,6 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    sh "kubectl config get-context"
 //                     sh "kubectl config use-context k8app"
                     sh "kubectl set image deployment/${KUBE_DEPLOYMENT} your-container-name=${DOCKER_IMAGE}:${BUILD_NUMBER} -n ${KUBE_NAMESPACE}"
                 }
