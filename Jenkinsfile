@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE = 'ndata-test-ms'
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_REGISTRY_CREDENTIALS = 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1'
-        KUBE_NAMESPACE = 'your-kubernetes-namespace'
+        KUBE_NAMESPACE = 'default'
         KUBE_DEPLOYMENT = 'your-kubernetes-deployment'
     }
 
@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh "kubectl config view -o jsonpath='{.current-context}'"
+//                     sh "kubectl config view -o jsonpath='{.current-context}'"
                     sh "kubectl config use-context k8app"
                     sh "kubectl set image deployment/${KUBE_DEPLOYMENT} your-container-name=${DOCKER_IMAGE}:${BUILD_NUMBER} -n ${KUBE_NAMESPACE}"
                 }
