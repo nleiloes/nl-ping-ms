@@ -6,11 +6,11 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
 
-    agent {
-        node {
-            label 'local_node'
-        }
-    }
+//     agent {
+//         node {
+//             label 'local_node'
+//         }
+//     }
 
     environment
             {
