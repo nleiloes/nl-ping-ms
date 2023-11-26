@@ -51,8 +51,6 @@ pipeline {
                 {
                     steps
                             {
-                                script { STAGE = getCurrentStage() }
-
                                 echo "Branch name: ${BRANCH_NAME}"
                                 echo "Build Id: ${BUILD_ID}"
 
@@ -132,8 +130,6 @@ pipeline {
                     }
                     steps
                             {
-                                script { STAGE = getCurrentStage() }
-
                                 script {
                                     if (isRelease == "true") {
                                         buildSuffix = "deploy"
@@ -173,7 +169,6 @@ pipeline {
                             }
                     steps
                             {
-                                script { STAGE = getCurrentStage() }
                                 script
                                         {
                                             dockerTag = "${targetEnvironment}"
