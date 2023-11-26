@@ -113,7 +113,6 @@ pipeline {
                     }
                     steps
                             {
-                                script { STAGE = getCurrentStage() }
                                 echo "Release version: ${fullReleaseVersion}"
                                 sh ("mvn versions:set -DnewVersion=${fullReleaseVersion}")
                                 sh ("git add pom.xml")
