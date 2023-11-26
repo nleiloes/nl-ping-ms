@@ -51,8 +51,6 @@ pipeline {
                 {
                     steps
                             {
-                                echo "Branch name: ${BRANCH_NAME}"
-                                echo "Build Id: ${BUILD_ID}"
 
                                 script
                                         {
@@ -66,37 +64,9 @@ pipeline {
 
                                 script
                                         {
-                                            if ("${BRANCH_NAME}" == 'main')
-                                            {
-                                                targetEnvironment = "prd"
-                                                isRelease = "false"
-                                                buildModules = "false"
-                                            }
-                                            else if ("${BRANCH_NAME}" == 'develop')
-                                            {
                                                 targetEnvironment = "dev"
                                                 isRelease = "false"
                                                 buildModules = "true"
-                                            }
-                                            else if ("${BRANCH_NAME}".contains("release"))
-                                            {
-                                                targetEnvironment = "tst"
-                                                isRelease = "true"
-                                                buildModules = "true"
-
-                                                releaseVersion = sh (
-                                                        script: "echo $BRANCH_NAME | cut -d'/' -f 2",
-                                                        returnStdout: true
-                                                ).trim()
-
-                                                echo "Release version: ${releaseVersion}"
-                                                fullReleaseVersion = "${releaseVersion}.${BUILD_ID}"
-                                                echo "Full Release version: ${fullReleaseVersion}"
-                                            }
-                                            else
-                                            {
-                                                targetEnvironment = "invalid"
-                                            }
                                         }
                                 echo "Target environment: ${targetEnvironment}"
                             }
@@ -115,7 +85,7 @@ pipeline {
                                 sh ("mvn versions:set -DnewVersion=${fullReleaseVersion}")
                                 sh ("git add pom.xml")
                                 sh ("git commit -m \"${gitCommitPrefix} set release version ${fullReleaseVersion}\"")
-                                sh ("git push --set-upstream origin ${BRANCH_NAME}")
+                                sh ("git push --set-upstream origin master")
                                 script { currentVersion = "${fullReleaseVersion}" }
                             }
                 }
