@@ -148,95 +148,6 @@ pipeline {
 
 
 
-//         stage('Dependency Analysis') {
-//             when {
-// 				expression {
-// 					"${buildModules}" == 'true'
-// 				}
-// 			}
-//             steps {
-//                 script { STAGE = getCurrentStage() }
-//
-//                 sh "mkdir odc-reports || echo 'OK'"
-//                 sh "mkdir report || echo 'OK'"
-//
-//                 sh 'dependency-check'
-//
-// 				archiveArtifacts artifacts: "odc-reports/*", onlyIfSuccessful: true
-//             }
-//         }
-
-//         stage ('Run SonarQube Scanner Analysis'){
-//             when {
-// 				expression {
-// 					"${buildModules}" == 'true'
-// 				}
-// 			}
-//             steps {
-//                 withSonarQubeEnv('LocalSonar'){
-//                     sh "mvn sonar:sonar"
-//                 }
-//             }
-//         }
-
-//         stage ('Archive modules')
-// 		{
-// 			when {
-// 				expression {
-// 					"${buildModules}" == 'true'
-// 				}
-// 			}
-//             steps
-// 			{
-//                 script { STAGE = getCurrentStage() }
-//
-//                 script
-//                 {
-//                     dir("target")
-//                     {
-//                         sh ("rm *.${extension}.original")
-//
-//                         distArchive = sh (
-//                                 script: 'ls | grep ' + extension + ' | tail -n 1 || echo NOT_FOUND',
-//                                 returnStdout: true
-//                             ).trim()
-//
-//                             archive (distArchive)
-//                             stash includes: distArchive , name: "${MODULE_NAME}"
-//                     }
-//                 }
-//             }
-//         }
-//
-// 		stage ('Download modules from Nexus for Production deployment')
-// 		{
-// 			when {
-// 				expression {
-// 					"${buildModules}" == 'false'
-// 				}
-// 			}
-// 			steps
-// 			{
-// 				sh ('mkdir target')
-//
-// 				dir ('target')
-//                 {
-//                     script
-//                     {
-//                         echo "Downloading module: ${artifactId}-${currentVersion}"
-//
-//                         sh("mvn com.googlecode.maven-download-plugin:download-maven-plugin:artifact -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${currentVersion} -DoutputDirectory=\".\"")
-//
-// 						distArchive = "${artifactId}-${currentVersion}.${extension}"
-//
-//                         archive (distArchive)
-//                         stash includes: distArchive , name: "${MODULE_NAME}"
-//                     }
-//                 }
-// 			}
-// 		}
-
-
         stage('Build Docker Image') {
             steps {
                 script {
@@ -244,7 +155,6 @@ pipeline {
 
                         withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
                             sh "docker login -u lcrbneves -p 2Sq9he3c!"
-//                             sh "docker image build -t ndata-test-ms ."
                             sh 'docker push lcrbneves/ndata-test-ms:latest'
                         }
                 }
@@ -269,45 +179,15 @@ pipeline {
                                             dockerTag = "${targetEnvironment}"
                                             useContext = "${targetEnvironment}"
                                         }
-
-//                                 sh ("docker tag ${DOCKER_REGISTRY}/${MODULE_NAME}:${currentVersion} ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
-//
-//                                 sh ("docker login -u jenkins-token -p kKHQnDZbDzekaUMRXve3rXUmhA786xNkStdsk3/0fU+ACRDM97Dm powerqubit.azurecr.io")
-//                                 sh ("docker push ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
-
                                 sh ("kubectl config use-context k8app")
                                 sh ("kubectl replace --force -f deployment-${targetEnvironment}.yaml")
-
                             }
                 }
 
 
-//         stage ('Deploy micro-service to Test environment')
-//                 {
-//                     when
-//                             {
-//                                 expression
-//                                         {
-//                                             "${targetEnvironment}" == 'tst'
-//                                         }
-//                             }
-//                     steps
-//                             {
-//                                 script { STAGE = getCurrentStage() }
-//
-//                                 timeout(time: 60, unit: 'SECONDS') {
-//                                     input 'Deploy to Test environment?'
-//                                 }
-//
-//                                 script
-//                                         {
-//                                             dockerTag = "${targetEnvironment}"
-//                                             useContext = "${targetEnvironment}"
-//                                         }
-//                             }
-//                 }
-//
-//         stage ('Deploy micro-service to Production environment')
+
+
+//         stage ('Prepare next development iteration')
 //                 {
 //                     when
 //                             {
@@ -318,80 +198,35 @@ pipeline {
 //                             }
 //                     steps
 //                             {
-//                                 script { STAGE = getCurrentStage() }
 //
-//                                 timeout(time: 60, unit: 'SECONDS') {
-//                                     input 'Deploy to Production environment?'
-//                                 }
+//                                 step([$class: 'WsCleanup'])
+//
+//                                 git branch: "develop",
+//                                         url: "${repository_url}"
 //
 //                                 script
 //                                         {
-//                                             dockerTag = "latest"
-//                                             useContext = "${targetEnvironment}"
+//                                             sh ('git merge origin/main')
+//                                         }
+//
+//                                 script
+//                                         {
+//                                             sh ("git tag -a ${currentVersion} -m \"${gitCommitPrefix} release version ${currentVersion}\"")
+//                                             sh ("git push origin ${currentVersion}")
+//
+//                                             echo "Next version type: ${nextVersionType}"
+//
+//                                             nextVersion = incrementVersion(nextVersionType, currentVersion)
+//
+//                                             echo "Next version: ${nextVersion}"
+//
+//                                             sh ("mvn versions:set -DnewVersion=${nextVersion}-SNAPSHOT")
+//
+//                                             sh ('git add pom.xml')
+//                                             sh ("git commit -m '${gitCommitPrefix} preparing next development iteration for version ${nextVersion}'")
+//                                             sh ('git push --set-upstream origin develop')
 //                                         }
 //                             }
 //                 }
-
-
-        stage ('Prepare next development iteration')
-                {
-                    when
-                            {
-                                expression
-                                        {
-                                            "${targetEnvironment}" == 'prd'
-                                        }
-                            }
-                    steps
-                            {
-                                script { STAGE = getCurrentStage() }
-
-                                step([$class: 'WsCleanup'])
-
-                                git branch: "develop",
-                                        url: "${repository_url}"
-
-                                script
-                                        {
-                                            sh ('git merge origin/main')
-                                        }
-
-                                script
-                                        {
-                                            sh ("git tag -a ${currentVersion} -m \"${gitCommitPrefix} release version ${currentVersion}\"")
-                                            sh ("git push origin ${currentVersion}")
-
-                                            echo "Next version type: ${nextVersionType}"
-
-                                            nextVersion = incrementVersion(nextVersionType, currentVersion)
-
-                                            echo "Next version: ${nextVersion}"
-
-                                            sh ("mvn versions:set -DnewVersion=${nextVersion}-SNAPSHOT")
-
-                                            sh ('git add pom.xml')
-                                            sh ("git commit -m '${gitCommitPrefix} preparing next development iteration for version ${nextVersion}'")
-                                            sh ('git push --set-upstream origin develop')
-                                        }
-                            }
-                }
-
-//     post{
-//         always{
-//             step([$class: 'WsCleanup'])
-// //
-//         }
-// //         aborted {
-// //             office365ConnectorSend webhookUrl: "${webHookUrlFailures}",
-// //                 factDefinitions: [[name: "Deployment rejected", attachLog: true,template: "${STAGE}"]]
-// //         }
-// //         failure {
-// //             office365ConnectorSend webhookUrl: "${webHookUrlFailures}",
-// //                 factDefinitions: [[name: "Fail Stage", attachLog: true,template: "${STAGE}"]]
-// //         }
-// //         success {
-// //             office365ConnectorSend webhookUrl: "${webHookUrlSuccess}"
-// //         }
-//
-    }
+//     }
 }
