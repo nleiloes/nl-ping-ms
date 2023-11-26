@@ -1,5 +1,3 @@
-@Library('jenkins-libs')_
-
 def STAGE = "Start"
 
 pipeline {
