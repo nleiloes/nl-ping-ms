@@ -244,15 +244,19 @@ pipeline {
 // 		}
 
 
-        stage('Build docker image')
-                {
-                    steps
-                            {
-                                script { STAGE = getCurrentStage() }
-                                sh("docker login -u jenkins-token -p kKHQnDZbDzekaUMRXve3rXUmhA786xNkStdsk3/0fU+ACRDM97Dm powerqubit.azurecr.io")
-                                sh ("docker build --rm -t ${DOCKER_REGISTRY}/${MODULE_NAME}:${currentVersion} .")
-                            }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def customImageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+
+                        withCredentials([usernamePassword(credentialsId: 'db6fb655-60dc-4fb6-ab8d-0e19caa1cbe1', usernameVariable: 'lcrbneves', passwordVariable: '2Sq9he3c!')]) {
+                            sh "docker login -u lcrbneves -p 2Sq9he3c!"
+//                             sh "docker image build -t ndata-test-ms ."
+                            sh 'docker push lcrbneves/ndata-test-ms:latest'
+                        }
                 }
+            }
+        }
 
 
         stage ('Deploy micro-service to Dev environment')
@@ -273,10 +277,10 @@ pipeline {
                                             useContext = "${targetEnvironment}"
                                         }
 
-                                sh ("docker tag ${DOCKER_REGISTRY}/${MODULE_NAME}:${currentVersion} ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
-
-                                sh ("docker login -u jenkins-token -p kKHQnDZbDzekaUMRXve3rXUmhA786xNkStdsk3/0fU+ACRDM97Dm powerqubit.azurecr.io")
-                                sh ("docker push ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
+//                                 sh ("docker tag ${DOCKER_REGISTRY}/${MODULE_NAME}:${currentVersion} ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
+//
+//                                 sh ("docker login -u jenkins-token -p kKHQnDZbDzekaUMRXve3rXUmhA786xNkStdsk3/0fU+ACRDM97Dm powerqubit.azurecr.io")
+//                                 sh ("docker push ${DOCKER_REGISTRY}/${MODULE_NAME}:${dockerTag}")
 
                                 sh ("kubectl config use-context k8app")
                                 sh ("kubectl replace --force -f deployment-${targetEnvironment}.yaml")
@@ -285,55 +289,55 @@ pipeline {
                 }
 
 
-        stage ('Deploy micro-service to Test environment')
-                {
-                    when
-                            {
-                                expression
-                                        {
-                                            "${targetEnvironment}" == 'tst'
-                                        }
-                            }
-                    steps
-                            {
-                                script { STAGE = getCurrentStage() }
-
-                                timeout(time: 60, unit: 'SECONDS') {
-                                    input 'Deploy to Test environment?'
-                                }
-
-                                script
-                                        {
-                                            dockerTag = "${targetEnvironment}"
-                                            useContext = "${targetEnvironment}"
-                                        }
-                            }
-                }
-
-        stage ('Deploy micro-service to Production environment')
-                {
-                    when
-                            {
-                                expression
-                                        {
-                                            "${targetEnvironment}" == 'prd'
-                                        }
-                            }
-                    steps
-                            {
-                                script { STAGE = getCurrentStage() }
-
-                                timeout(time: 60, unit: 'SECONDS') {
-                                    input 'Deploy to Production environment?'
-                                }
-
-                                script
-                                        {
-                                            dockerTag = "latest"
-                                            useContext = "${targetEnvironment}"
-                                        }
-                            }
-                }
+//         stage ('Deploy micro-service to Test environment')
+//                 {
+//                     when
+//                             {
+//                                 expression
+//                                         {
+//                                             "${targetEnvironment}" == 'tst'
+//                                         }
+//                             }
+//                     steps
+//                             {
+//                                 script { STAGE = getCurrentStage() }
+//
+//                                 timeout(time: 60, unit: 'SECONDS') {
+//                                     input 'Deploy to Test environment?'
+//                                 }
+//
+//                                 script
+//                                         {
+//                                             dockerTag = "${targetEnvironment}"
+//                                             useContext = "${targetEnvironment}"
+//                                         }
+//                             }
+//                 }
+//
+//         stage ('Deploy micro-service to Production environment')
+//                 {
+//                     when
+//                             {
+//                                 expression
+//                                         {
+//                                             "${targetEnvironment}" == 'prd'
+//                                         }
+//                             }
+//                     steps
+//                             {
+//                                 script { STAGE = getCurrentStage() }
+//
+//                                 timeout(time: 60, unit: 'SECONDS') {
+//                                     input 'Deploy to Production environment?'
+//                                 }
+//
+//                                 script
+//                                         {
+//                                             dockerTag = "latest"
+//                                             useContext = "${targetEnvironment}"
+//                                         }
+//                             }
+//                 }
 
 
         stage ('Prepare next development iteration')
