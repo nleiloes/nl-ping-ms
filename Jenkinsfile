@@ -148,50 +148,5 @@ pipeline {
                                 sh ("kubectl replace --force -f deployment-${targetEnvironment}.yaml")
                             }
                 }
-
-
-
-
-//         stage ('Prepare next development iteration')
-//                 {
-//                     when
-//                             {
-//                                 expression
-//                                         {
-//                                             "${targetEnvironment}" == 'prd'
-//                                         }
-//                             }
-//                     steps
-//                             {
-//
-//                                 step([$class: 'WsCleanup'])
-//
-//                                 git branch: "develop",
-//                                         url: "${repository_url}"
-//
-//                                 script
-//                                         {
-//                                             sh ('git merge origin/main')
-//                                         }
-//
-//                                 script
-//                                         {
-//                                             sh ("git tag -a ${currentVersion} -m \"${gitCommitPrefix} release version ${currentVersion}\"")
-//                                             sh ("git push origin ${currentVersion}")
-//
-//                                             echo "Next version type: ${nextVersionType}"
-//
-//                                             nextVersion = incrementVersion(nextVersionType, currentVersion)
-//
-//                                             echo "Next version: ${nextVersion}"
-//
-//                                             sh ("mvn versions:set -DnewVersion=${nextVersion}-SNAPSHOT")
-//
-//                                             sh ('git add pom.xml')
-//                                             sh ("git commit -m '${gitCommitPrefix} preparing next development iteration for version ${nextVersion}'")
-//                                             sh ('git push --set-upstream origin develop')
-//                                         }
-//                             }
-//                 }
      }
 }

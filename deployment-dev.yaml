@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: ms-test
-          image: lcrbneves/ndata-test-ms:latest
+          image: docker.io/lcrbneves/ndata-test-ms:latest
           imagePullPolicy: Always
           env:
           ports:
