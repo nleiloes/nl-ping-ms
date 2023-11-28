@@ -45,6 +45,8 @@ spec:
       imagePullSecrets:
         - name: ocirsecret
 ---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
 metadata:
   name: ms-test
   namespace: default
