@@ -124,7 +124,7 @@ pipeline {
 //                             sh 'docker push lcrbneves/ndata-test-ms:latest'
                             script {
                                 docker.withRegistry('https://registry.hub.docker.com') {
-                                    docker.image("ndata-test-ms:latest").push()
+                                    docker.image("lcrbneves/ndata-test-ms:latest").push()
                                 }
                             }
                         }
