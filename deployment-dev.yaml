@@ -42,8 +42,6 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
-      imagePullSecrets:
-        - name: ocirsecret
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
