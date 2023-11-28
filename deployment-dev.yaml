@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-test-svc
+  namespace: default
+  labels:
+    app: ms-test
+    service: ms-test-svc
+spec:
+  selector:
+    app: ms-test
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-test-v1
+  namespace: default
+  labels:
+    app: ms-test
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-test
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ms-test
+        version: v1
+    spec:
+      containers:
+        - name: ms-test
+          image: powerqubit.azurecr.io/ms-test:dev
+          imagePullPolicy: Always
+          env:
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      imagePullSecrets:
+        - name: ocirsecret
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-test
+  namespace: default
+spec:
+  host: ms-test-svc
+  subsets:
+    - name: v1
+      labels:
+        version: v1

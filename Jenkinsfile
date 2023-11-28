@@ -145,7 +145,7 @@ pipeline {
                                             useContext = "${targetEnvironment}"
                                         }
                                 sh ("kubectl config use-context k8app")
-                                //sh ("kubectl replace --force -f deployment-${targetEnvironment}.yaml")
+                                sh ("kubectl replace --force -f deployment-${targetEnvironment}.yaml")
                             }
                 }
 
