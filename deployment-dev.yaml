@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-test-svc
+  name: ms-ping-svc
   namespace: default
   labels:
-    app: ms-test
-    service: ms-test-svc
+    app: ms-ping
+    service: ms-ping-svc
 spec:
   selector:
-    app: ms-test
+    app: ms-ping
   ports:
     - port: 8080
       targetPort: 8080
@@ -17,26 +17,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-test-v1
+  name: ms-ping-v1
   namespace: default
   labels:
-    app: ms-test
+    app: ms-ping
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ms-test
+      app: ms-ping
       version: v1
   template:
     metadata:
       labels:
-        app: ms-test
+        app: ms-ping
         version: v1
     spec:
       containers:
-        - name: ms-test
-          image: docker.io/lcrbneves/ndata-test-ms:latest
+        - name: ms-ping
+          image: ndata/ping:0.0.1-SNAPSHOT
           imagePullPolicy: Always
           env:
           ports:
@@ -46,10 +46,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-test
+  name: ms-ping
   namespace: default
 spec:
-  host: ms-test-svc
+  host: ms-ping-svc
   subsets:
     - name: v1
       labels:
