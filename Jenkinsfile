@@ -31,12 +31,18 @@ pipeline {
                 sh """
                 echo IMAGE: ${ARTIFACT_ID}
                 echo VERSION: ${ARTIFACT_VERSION}
-                docker build -f deploy/Dockerfile \
-                --build-arg JAR_FILE=target/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar \
-                --build-arg IMAGE_VERSION=${ARTIFACT_VERSION} \
-                -t ${ARTIFACT_ID}:${ARTIFACT_VERSION} .
-
                 """
+//                 sh """
+//                 echo IMAGE: ${ARTIFACT_ID}
+//                 echo VERSION: ${ARTIFACT_VERSION}
+//                 docker build -f deploy/Dockerfile \
+//                 --build-arg JAR_FILE=target/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar \
+//                 --build-arg IMAGE_VERSION=${ARTIFACT_VERSION} \
+//                 -t ${ARTIFACT_ID}:${ARTIFACT_VERSION} .
+//                 docker login -u lcrbneves -p 2Sq9he3c!
+//                 docker push lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION}
+//                 """
+                sh "docker build --rm -t lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION} ."
             }
         }
 
