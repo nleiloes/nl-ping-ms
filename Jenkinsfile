@@ -42,7 +42,7 @@ pipeline {
 //                 docker login -u lcrbneves -p 2Sq9he3c!
 //                 docker push lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION}
 //                 """
-                sh "docker build --rm -t lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION} ."
+                sh "docker build --rm -t ndata/${ARTIFACT_ID}:${ARTIFACT_VERSION} ."
             }
         }
 
