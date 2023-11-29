@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: ms-ping
-          image: ndata/ping:0.0.1-SNAPSHOT
+          image: lcrbneves/ping:0.0.1-SNAPSHOT
           imagePullPolicy: Always
           env:
           ports:
