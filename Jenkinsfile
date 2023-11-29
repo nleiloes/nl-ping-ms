@@ -51,5 +51,6 @@ pipeline {
                 sh ("kubectl config use-context k8app")
                 sh ("kubectl replace --force -f deployment-dev.yaml")
             }
+        }
     }
 }
