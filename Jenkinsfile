@@ -43,6 +43,7 @@ pipeline {
 //                 docker push lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION}
 //                 """
                 sh "docker build --rm -t lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION} ."
+                sh "docker push lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION}"
             }
         }
 
