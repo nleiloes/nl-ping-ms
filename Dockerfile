@@ -1,4 +1,4 @@
-FROM openjdk:17-slim AS builder
+FROM openjdk:11 AS builder
 WORKDIR /usr/local/temp
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
