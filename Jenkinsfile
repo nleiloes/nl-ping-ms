@@ -47,11 +47,9 @@ pipeline {
         }
 
         stage ('Kubernetes Deploy') {
-        when { expression { env.DEPLOYMENT.toBoolean() }}
             steps {
                 sh ("kubectl config use-context k8app")
                 sh ("kubectl replace --force -f deployment-dev.yaml")
             }
-        }
     }
 }
