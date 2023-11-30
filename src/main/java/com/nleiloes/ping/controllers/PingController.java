@@ -23,4 +23,9 @@ public class PingController
     public String ping() {
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
+
+    @GetMapping("")
+    public String pong() {
+        return  String.format("empty pong from %s version: %s - %s", serviceName, version, serviceDescription);
+    }
 }
