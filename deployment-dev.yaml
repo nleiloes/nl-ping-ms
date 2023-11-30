@@ -39,7 +39,7 @@ items:
           containers:
             - name: ms-ping
               image: lcrbneves/ping:0.0.1-SNAPSHOT
-              imagePullPolicy: IfNotPresent
+              imagePullPolicy: Always
               resources:
                 limits:
                   memory: "1Gi"
