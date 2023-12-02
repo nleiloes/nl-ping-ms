@@ -42,6 +42,7 @@ pipeline {
 //                 docker login -u lcrbneves -p 2Sq9he3c!
 //                 docker push lcrbneves/${ARTIFACT_ID}:${ARTIFACT_VERSION}
 //                 """
+                sh "docker login -u nleiloes -p 2Sq9he3c!"
                 sh "docker build --rm -t nleiloes/${ARTIFACT_ID}:${ARTIFACT_VERSION} ."
                 sh "docker push nleiloes/${ARTIFACT_ID}:${ARTIFACT_VERSION}"
             }
