@@ -38,7 +38,7 @@ items:
         spec:
           containers:
             - name: ms-ping
-              image: lcrbneves/ping:0.0.1-SNAPSHOT
+              image: nleiloes/ping:0.0.1-SNAPSHOT
               imagePullPolicy: Always
               resources:
                 limits:
