@@ -51,12 +51,12 @@ pipeline {
         stage ('Kubernetes Deploy') {
             steps {
 
-                sh "kubectl config view -o jsonpath='{.current-context}'"
-                echo "---------------"
-                sh "kubectl config get-contexts"
-                echo "---------------"
-                sh "kubectl config current-context"
-                sh ("kubectl config use-context k8app")
+//                 sh "kubectl config view -o jsonpath='{.current-context}'"
+//                 echo "---------------"
+//                 sh "kubectl config get-contexts"
+//                 echo "---------------"
+//                 sh "kubectl config current-context"
+//                 sh ("kubectl config use-context k8app")
                 sh ("kubectl replace --force -f deployment-dev.yaml")
             }
         }
