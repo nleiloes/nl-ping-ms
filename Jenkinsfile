@@ -50,7 +50,7 @@ pipeline {
 
         stage ('Kubernetes Deploy') {
             steps {
-                sh "who"
+                sh "whoami"
                 echo "-----------------"
                 sh "kubectl config view"
                 echo "---------------"
