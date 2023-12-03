@@ -52,6 +52,8 @@ pipeline {
             steps {
                 sh "whoami"
                 echo "-----------------"
+                sh "su - pq"
+                echo "-----------------"
                 sh "kubectl config view"
                 echo "---------------"
                 sh "kubectl config view -o jsonpath='{.current-context}'"
