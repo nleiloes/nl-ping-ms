@@ -52,19 +52,17 @@ pipeline {
             steps {
                 sh "whoami"
                 echo "-----------------"
-                sh "su - pq"
-                echo "-----------------"
                 sh "kubectl config view"
                 echo "---------------"
                 sh "kubectl config view -o jsonpath='{.current-context}'"
                 echo "---------------"
                 sh "kubectl config get-contexts"
                 echo "---------------"
-                sh ("kubectl config use-context k8app")
+                sh "kubectl config use-context k8app"
                 echo "---------------"
                 sh "kubectl config current-context"
                 echo "---------------"
-                sh ("kubectl replace --force -f deployment-dev.yaml")
+                sh "kubectl replace --force -f deployment-dev.yaml"
             }
         }
     }
