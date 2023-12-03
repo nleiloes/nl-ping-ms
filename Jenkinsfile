@@ -50,6 +50,8 @@ pipeline {
 
         stage ('Kubernetes Deploy') {
             steps {
+                sh "who"
+                echo "-----------------"
                 sh "kubectl config view"
                 echo "---------------"
                 sh "kubectl config view -o jsonpath='{.current-context}'"
