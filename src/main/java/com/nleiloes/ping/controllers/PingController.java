@@ -24,8 +24,8 @@ public class PingController
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
 
-    @GetMapping("")
+    @GetMapping("secured")
     public String pong() {
-        return  String.format("empty pooooong from %s version: %s - %s", serviceName, version, serviceDescription);
+        return  String.format("I'm a secured route");
     }
 }
