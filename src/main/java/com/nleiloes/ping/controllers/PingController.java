@@ -19,7 +19,7 @@ public class PingController
     @Value("${info.app.description:unknown}")
     String serviceDescription;
 
-    @GetMapping("ping")
+    @GetMapping("")
     public String ping() {
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
