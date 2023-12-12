@@ -21,11 +21,13 @@ public class PingController
 
     @GetMapping("")
     public String ping() {
+        System.out.println("pong");
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
 
     @GetMapping("secured")
     public String pong() {
+        System.out.println("secured");
         return  String.format("I'm a secured route");
     }
 }
