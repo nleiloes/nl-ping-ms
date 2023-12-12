@@ -27,7 +27,7 @@ public class PingController
 
     @GetMapping("secured")
     public String pong() {
-//        System.out.println("secured");
+        System.out.println("secured");
         return  String.format("I'm a secured route");
     }
 }
