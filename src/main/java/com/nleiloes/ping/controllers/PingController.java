@@ -21,7 +21,7 @@ public class PingController
 
     @GetMapping("")
     public String ping() {
-        System.out.println("pong");
+        System.out.println("poong");
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
 
