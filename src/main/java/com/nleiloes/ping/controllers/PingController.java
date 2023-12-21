@@ -29,7 +29,8 @@ public class PingController
 
     @GetMapping("secured")
     public String pong(HttpServletRequest request) {
-        request.getHeader("Authorization");
+        var x = request.getHeader("Authorization");
+        System.out.println(x);
         return  String.format("I'm a secured route: ");
     }
 }
