@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @RestController
@@ -27,7 +28,8 @@ public class PingController
     }
 
     @GetMapping("secured")
-    public String pong(Principal principal) {
-        return  String.format("I'm a secured route: "+ principal.getName().toString());
+    public String pong(HttpServletRequest request) {
+        request.getHeader("Authorization");
+        return  String.format("I'm a secured route: ");
     }
 }
