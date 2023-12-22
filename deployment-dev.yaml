@@ -54,3 +54,16 @@ items:
               env:
                 - name: SPRING_PROFILES_ACTIVE
                   value: k8s
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-ping
+  namespace: default
+spec:
+  host: nl-ping-ms
+  subsets:
+    - name: v1
+      labels:
+        version: v1
