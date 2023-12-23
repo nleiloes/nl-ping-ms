@@ -1,3 +1,5 @@
+package com.nleiloes.ping.configs;
+
 import com.nleiloes.ping.configs.KeycloakLogoutHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
