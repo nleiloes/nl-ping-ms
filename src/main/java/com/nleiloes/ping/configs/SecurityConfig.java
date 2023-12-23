@@ -30,7 +30,7 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/api/ping/secured/**"))
+                .requestMatchers(new AntPathRequestMatcher("/api/private/**"))
                 .permitAll()
                 .anyRequest()
                 .authenticated();
