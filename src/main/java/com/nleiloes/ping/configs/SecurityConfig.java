@@ -30,10 +30,8 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/api/public/**"))
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+                .requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll()
+                .anyRequest().authenticated(); //other URLs are only allowed authenticated users.
         http.oauth2Login()
                 .and()
                 .logout()
@@ -46,10 +44,8 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/customers*"))
-                .hasRole("USER")
-                .anyRequest()
-                .authenticated();
+                .requestMatchers(new AntPathRequestMatcher("/**"))
+                .permitAll();
         http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
