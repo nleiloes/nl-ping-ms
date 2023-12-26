@@ -20,12 +20,12 @@ public class PingController
     @Value("${info.app.description:unknown}")
     String serviceDescription;
 
-    @GetMapping("public/ping")
+    @GetMapping("public")
     public String ping() {
         return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
 
-    @GetMapping("private/ping")
+    @GetMapping("private")
     public String pong(HttpServletRequest request) {
         var x = request.getHeader("Authorization");
         return  String.format("I'm a secured route: ");
