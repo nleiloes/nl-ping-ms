@@ -1,6 +1,7 @@
 package com.nleiloes.ping.configs;
 
 import com.nleiloes.ping.configs.KeycloakLogoutHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -19,6 +20,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 class SecurityConfig {
     private final KeycloakLogoutHandler keycloakLogoutHandler;
+
+    @Value("${server.servlet.context-path:''}")
+    private String contextPath;
+
     SecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler) {
         this.keycloakLogoutHandler = keycloakLogoutHandler;
     }
@@ -30,7 +35,7 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("ping/public/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll()
                 .anyRequest().authenticated(); //other URLs are only allowed authenticated users.
         http.oauth2Login()
                 .and()
@@ -44,8 +49,7 @@ class SecurityConfig {
     @Bean
     public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("ping/**"))
-                .permitAll();
+                .requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll();
         http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
