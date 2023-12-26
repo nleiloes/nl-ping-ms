@@ -15,7 +15,6 @@ items:
           port: 8080
           protocol: TCP
           targetPort: 8080
-          nodePort: 31000
       type: ClusterIP
       selector:
         app: ms-ping
