@@ -15,8 +15,7 @@ items:
           port: 8080
           protocol: TCP
           targetPort: 8080
-          nodePort: 31000
-      type: NodePort
+      type: LoadBalancer
       selector:
         app: ms-ping
   - apiVersion: apps/v1
