@@ -22,7 +22,7 @@ public class PingController
 
     @GetMapping("public")
     public String ping() {
-        return  String.format("pong from %s version: %s - %s", serviceName, version, serviceDescription);
+        return  String.format("poooong from %s version: %s - %s", serviceName, version, serviceDescription);
     }
 
     @GetMapping("private")
